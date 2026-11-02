@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>DEMONTAG — три концепта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F5F4F1; --card:#fff; --ink:#17181B; --muted:#62656D; --line:#E2E0DA; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Manrope", system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; font-size: 16px; }
+  a { color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 56px 0 28px; }
+  .k { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.1; letter-spacing: -.02em; margin-top: 10px; font-weight: 800; }
+  .intro { color: var(--muted); max-width: 760px; margin-top: 14px; font-size: 17px; }
+
+  .insight { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 28px 0 48px; }
+  .insight div { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .insight b { display: block; margin-bottom: 6px; }
+  .insight p { color: var(--muted); font-size: 15px; }
+
+  .concepts { display: grid; gap: 28px; padding-bottom: 72px; }
+  .c { display: grid; grid-template-columns: 1.25fr 1fr; background: var(--card); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; }
+  .shot { position: relative; height: 460px; overflow: hidden; background: #ddd; border-right: 1px solid var(--line); }
+  .shot iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 1100px; border: 0; transform: scale(.48); transform-origin: 0 0; pointer-events: none; }
+  .shot a { position: absolute; inset: 0; }
+  .info { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .info h2 { font-size: 28px; letter-spacing: -.02em; line-height: 1.15; }
+  .info h2 small { display: block; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+  .info p { color: var(--muted); }
+  .sw { display: flex; gap: 6px; }
+  .sw i { width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); }
+  ul { list-style: none; display: grid; gap: 6px; font-size: 15px; }
+  li { padding-left: 20px; position: relative; }
+  li::before { content: "+"; position: absolute; left: 0; font-weight: 800; color: #2E8B57; }
+  li.minus::before { content: "−"; color: #B4472B; }
+  .meta { font-size: 14px; color: var(--muted); }
+  .meta b { color: var(--ink); }
+  .open { margin-top: auto; display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; height: 46px; padding: 0 20px; border-radius: 999px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 700; font-size: 15px; }
+  .open:hover { opacity: .88; }
+
+  .next { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; margin-bottom: 72px; }
+  .next h2 { font-size: 24px; margin-bottom: 12px; }
+  .next ol { padding-left: 20px; display: grid; gap: 6px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .insight { grid-template-columns: 1fr; }
+    .c { grid-template-columns: 1fr; }
+    .shot { height: 300px; border-right: 0; border-bottom: 1px solid var(--line); }
+    .shot iframe { transform: scale(.36); }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .info, .next { padding: 22px; }
+    .shot { height: 220px; }
+    .shot iframe { transform: scale(.25); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="k">DEMONTAG · сайт · этап 1 — дизайн</span>
+    <h1>Три концепта главной страницы</h1>
+    <p class="intro">Все три — одностраничный сайт-визитка с одинаковой структурой: что делаем → сколько стоит → как работаем → примеры → вопросы → связь. Отличаются характером, а значит, тем, какого клиента бренд притягивает. Тексты на украинском; телефоны, цены, цифры и отзывы — демо-данные, заменим реальными из Instagram и от заказчика.</p>
+  </header>
+
+  <div class="insight">
+    <div><b>Что у конкурентов</b><p>Все три сайта сделаны по одному шаблону: оранжевый цвет, фото экскаватора под тёмной вуалью, 5–6 одинаковых форм заявки, длинный SEO-текст.</p></div>
+    <div><b>Где они теряют доверие</b><p>Противоречивые цифры («0 лет опыта», «с 2015» против «основаны в 2023»), цены в одних блоках не сходятся с другими, отзывы без текста, опечатки.</p></div>
+    <div><b>На чём выделяемся мы</b><p>Ясность и честность: цена фиксируется в договоре, оценка по фото за 30 минут, без предоплаты, ежедневный фотоотчёт. Один понятный призыв к действию: «Отправить фото».</p></div>
+  </div>
+
+  <div class="concepts">
+
+    <article class="c">
+      <div class="shot"><iframe src="a-kreslennia.html" title="Концепт A" loading="lazy" tabindex="-1"></iframe><a href="a-kreslennia.html" aria-label="Открыть концепт A"></a></div>
+      <div class="info">
+        <h2><small>Концепт A</small>«Креслення» — инженерная точность</h2>
+        <p>Сайт выглядит как рабочий чертёж: светлая «бумага», сетка, моноширинные подписи, синий акцент. Главная идея — «демонтаж по смете, а не на глаз». На первом экране спецификация работ с чертежом объекта.</p>
+        <div class="sw"><i style="background:#F4F2ED"></i><i style="background:#15171C"></i><i style="background:#2340E0"></i><i style="background:#E3E7FB"></i></div>
+        <ul>
+          <li>Максимально непохож на конкурентов: никто в нише не уходит в светлую тему и синий цвет</li>
+          <li>Сильнее всего работает на B2B, застройщиков и сложные объекты</li>
+          <li>Хорошо смотрится даже с небольшим количеством фото</li>
+          <li class="minus">Уходит от тёмно-оранжевого стиля Instagram, логотип придётся адаптировать</li>
+        </ul>
+        <p class="meta">Шрифты: <b>Onest</b> + <b>JetBrains Mono</b></p>
+        <a class="open" href="a-kreslennia.html">Открыть концепт →</a>
+      </div>
+    </article>
+
+    <article class="c">
+      <div class="shot"><iframe src="b-beton.html" title="Концепт B" loading="lazy" tabindex="-1"></iframe><a href="b-beton.html" aria-label="Открыть концепт B"></a></div>
+      <div class="info">
+        <h2><small>Концепт B</small>«Бетон» — фирменная сила</h2>
+        <p>Развитие нынешнего стиля Instagram (тёмный фон, бетон, оранжевый акцент из логотипа), но в современной подаче: огромная типографика «Зносимо. Вивозимо. Здаємо чистим.», интерактивный слайдер «до / после», бегущая строка услуг, плитки-бенто.</p>
+        <div class="sw"><i style="background:#0F0F0E"></i><i style="background:#1A1A18"></i><i style="background:#FF6B1A"></i><i style="background:#F1EFE8"></i></div>
+        <ul>
+          <li>Совпадает с логотипом и Instagram: бренд узнаётся сразу</li>
+          <li>Самый эффектный: запоминается и хорошо показывает видео и фото работ</li>
+          <li>Слайдер «до / после» — сильный аргумент, которого нет у конкурентов</li>
+          <li class="minus">Оранжевый есть и у конкурентов: выделяемся подачей, а не цветом</li>
+        </ul>
+        <p class="meta">Шрифты: <b>Unbounded</b> + <b>Manrope</b></p>
+        <a class="open" href="b-beton.html">Открыть концепт →</a>
+      </div>
+    </article>
+
+    <article class="c">
+      <div class="shot"><iframe src="c-chysta-dilianka.html" title="Концепт C" loading="lazy" tabindex="-1"></iframe><a href="c-chysta-dilianka.html" aria-label="Открыть концепт C"></a></div>
+      <div class="info">
+        <h2><small>Концепт C</small>«Чиста ділянка» — забота о клиенте</h2>
+        <p>Тёплый и спокойный: песочный фон, глубокий зелёный цвет, мягкие карточки. Акцент на результате, то есть на чистом участке под стройку. Есть вкладки «Квартира / Дом / Бизнес» и калькулятор, который показывает ориентир цены без ввода телефона.</p>
+        <div class="sw"><i style="background:#F6F1E8"></i><i style="background:#1F4D3A"></i><i style="background:#DCE7DF"></i><i style="background:#C79A4B"></i></div>
+        <ul>
+          <li>Лучше всего конвертирует частных клиентов: квартиры и дома</li>
+          <li>Калькулятор без телефона прямо закрывает частый вопрос «Скільки коштує?» из комментариев</li>
+          <li>Выглядит дороже и надёжнее среди «строительных» сайтов</li>
+          <li class="minus">Мягче, чем привычно для ниши; промышленным заказчикам может показаться «несерьёзным»</li>
+        </ul>
+        <p class="meta">Шрифты: <b>Lora</b> + <b>Manrope</b></p>
+        <a class="open" href="c-chysta-dilianka.html">Открыть концепт →</a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="next">
+    <h2>Что дальше</h2>
+    <ol>
+      <li>Выбираете концепт (или комбинацию: например, структуру C в стилистике B).</li>
+      <li>Наполняем реальным контентом из Instagram: услуги, цены, этапы, отзывы, фото объектов.</li>
+      <li>Получаем от заказчика телефоны, мессенджеры, исходник логотипа и фото / видео в хорошем качестве.</li>
+      <li>Вёрстка финального сайта: украинский + русский, SEO по Виннице и Киеву, быстрая загрузка.</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>

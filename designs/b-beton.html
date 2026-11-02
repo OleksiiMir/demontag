@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>DEMONTAG.PRO — Бетон</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0F0E;
+    --surface: #1A1A18;
+    --surface-2: #232320;
+    --line: #2E2E2A;
+    --text: #F1EFE8;
+    --muted: #9C998F;
+    --volt: #FF6B1A;
+    --volt-ink: #0F0F0E;
+    --display: "Unbounded", system-ui, sans-serif;
+    --sans: "Manrope", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans); color: var(--text); background: var(--bg);
+    font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* concrete grain */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+  .display { font-family: var(--display); text-transform: uppercase; letter-spacing: -.02em; }
+  .volt { color: var(--volt); }
+
+  header { position: sticky; top: 0; z-index: 30; background: rgba(15,15,14,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; gap: 36px; height: 72px; }
+  .logo { font-family: var(--display); font-weight: 900; font-size: 19px; letter-spacing: -.02em; }
+  .logo span { color: var(--volt); }
+  .menu { display: flex; gap: 28px; font-size: 15px; color: var(--muted); font-weight: 500; }
+  .menu a:hover { color: var(--text); }
+  .nav-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    height: 52px; padding: 0 26px; border-radius: 999px;
+    font: 700 15px/1 var(--sans); cursor: pointer; border: 0; white-space: nowrap;
+    background: var(--volt); color: var(--volt-ink); transition: transform .15s, box-shadow .15s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,26,.25); }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid #45453F; }
+  .btn.ghost:hover { border-color: var(--text); box-shadow: none; }
+  .btn.sm { height: 42px; padding: 0 18px; font-size: 14px; }
+  .burger { display: none; width: 42px; height: 42px; border-radius: 50%; border: 1px solid #45453F; background: none; cursor: pointer; place-items: center; }
+
+  /* hero */
+  .hero { padding: 64px 0 40px; overflow: hidden; }
+  .hero-top { display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+  .live { display: inline-flex; align-items: center; gap: 10px; }
+  .live::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--volt); box-shadow: 0 0 0 0 rgba(255,107,26,.6); animation: pulse 2s infinite; }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(255,107,26,0); } 100% { box-shadow: 0 0 0 0 rgba(255,107,26,0); } }
+  h1 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(36px, 6.6vw, 96px); line-height: .92; letter-spacing: -.045em; }
+  h1 .out { color: transparent; -webkit-text-stroke: 2px var(--text); }
+  h1 .v { color: var(--volt); }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; margin-top: 48px; align-items: end; }
+  .hero-copy p { color: var(--muted); font-size: 19px; max-width: 440px; }
+  .hero-copy .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+
+  /* before / after */
+  .ba {
+    position: relative; aspect-ratio: 16/10; border-radius: 22px; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line); user-select: none; touch-action: pan-y; cursor: ew-resize;
+  }
+  .ba svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .ba .before { clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0); }
+  .ba .handle { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 2px; background: var(--volt); transform: translateX(-1px); }
+  .ba .knob {
+    position: absolute; top: 50%; left: 50%; width: 52px; height: 52px; border-radius: 50%;
+    background: var(--volt); color: var(--volt-ink); transform: translate(-50%, -50%);
+    display: grid; place-items: center; font-weight: 800; box-shadow: 0 6px 24px rgba(0,0,0,.4);
+  }
+  .ba .lbl { position: absolute; top: 16px; padding: 6px 12px; border-radius: 999px; font: 700 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+  .ba .lbl.l { left: 16px; background: rgba(15,15,14,.75); }
+  .ba .lbl.r { right: 16px; background: var(--volt); color: var(--volt-ink); }
+  .ba .cap { position: absolute; left: 16px; bottom: 16px; font-size: 13px; color: var(--muted); background: rgba(15,15,14,.75); padding: 6px 12px; border-radius: 999px; }
+
+  /* hazard ticker */
+  .ticker { margin-top: 56px; background: var(--volt); color: var(--volt-ink); overflow: hidden; transform: rotate(-1.2deg); margin-left: -20px; margin-right: -20px; border-top: 3px solid var(--volt-ink); border-bottom: 3px solid var(--volt-ink); }
+  .ticker-in { display: flex; gap: 40px; padding: 16px 0; white-space: nowrap; width: max-content; animation: run 28s linear infinite; font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 20px; }
+  .ticker-in span::after { content: "✕"; margin-left: 40px; }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  section { padding: 110px 0; }
+  .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+  .eyebrow { color: var(--volt); font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 16px; display: block; }
+  h2 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(32px, 5vw, 64px); line-height: .98; letter-spacing: -.035em; }
+  .sec-head p { color: var(--muted); max-width: 360px; }
+
+  /* bento */
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 230px; gap: 14px; }
+  .tile {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 26px;
+    display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .tile:hover { border-color: var(--volt); transform: translateY(-3px); }
+  .tile.big { grid-column: span 2; grid-row: span 2; }
+  .tile.wide { grid-column: span 2; }
+  .tile .n { font-family: var(--display); font-weight: 500; color: var(--muted); font-size: 13px; }
+  .tile h3 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 21px; line-height: 1.08; letter-spacing: -.02em; }
+  .tile.big h3 { font-size: clamp(28px, 3vw, 40px); }
+  .tile p { color: var(--muted); font-size: 15px; margin-top: 10px; max-width: 420px; }
+  .tile .price { display: inline-flex; align-self: flex-start; margin-top: 16px; padding: 7px 14px; border-radius: 999px; background: var(--surface-2); font-weight: 700; font-size: 14px; }
+  .tile.big { background: var(--volt); color: var(--volt-ink); border-color: var(--volt); }
+  .tile.big .n, .tile.big p { color: #4A1D04; }
+  .tile.big .price { background: var(--volt-ink); color: var(--volt); }
+  .tile .glyph { position: absolute; right: -10px; bottom: -40px; font-family: var(--display); font-weight: 900; font-size: 220px; line-height: 1; color: rgba(15,15,14,.09); pointer-events: none; }
+
+  /* numbers */
+  .nums { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .nums div { padding: 40px 24px 40px 0; }
+  .nums div + div { padding-left: 24px; border-left: 1px solid var(--line); }
+  .nums b { display: block; font-family: var(--display); font-weight: 900; font-size: clamp(40px, 5vw, 72px); letter-spacing: -.04em; line-height: 1; }
+  .nums b i { font-style: normal; color: var(--volt); }
+  .nums span { color: var(--muted); font-size: 15px; display: block; margin-top: 12px; }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: s; }
+  .st { border-top: 3px solid var(--line); padding-top: 24px; transition: border-color .2s; }
+  .st:hover { border-color: var(--volt); }
+  .st b { font-family: var(--display); font-weight: 900; font-size: 64px; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px #5A5A52; display: block; }
+  .st:hover b { -webkit-text-stroke-color: var(--volt); }
+  .st h3 { font-size: 20px; font-weight: 700; margin: 18px 0 8px; }
+  .st p { color: var(--muted); font-size: 15px; }
+
+  /* cases (horizontal) */
+  .rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(320px, 1fr); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: #45453F transparent; }
+  .card { scroll-snap-align: start; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+  .card .img {
+    aspect-ratio: 4/3; position: relative; display: grid; place-items: center; color: #5A5A52;
+    background:
+      radial-gradient(circle at 30% 40%, #2A2A26 0, transparent 60%),
+      repeating-linear-gradient(-45deg, #1F1F1C 0 14px, #1A1A18 14px 28px);
+    font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
+  }
+  .card .chips { position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; }
+  .chip { padding: 5px 11px; border-radius: 999px; background: rgba(15,15,14,.8); font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 0; text-transform: none; }
+  .chip.v { background: var(--volt); color: var(--volt-ink); }
+  .card .body { padding: 22px; }
+  .card h3 { font-size: 19px; font-weight: 700; line-height: 1.3; }
+  .card .meta { display: flex; gap: 18px; margin-top: 14px; color: var(--muted); font-size: 14px; flex-wrap: wrap; }
+  .card .meta b { color: var(--text); }
+
+  /* cta */
+  .cta-block { background: var(--volt); color: var(--volt-ink); border-radius: 32px; padding: 72px 56px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; position: relative; overflow: hidden; }
+  .cta-block h2 { font-size: clamp(34px, 5.4vw, 76px); }
+  .cta-block p { margin-top: 18px; font-size: 18px; color: #4A1D04; max-width: 460px; font-weight: 500; }
+  .stack { display: grid; gap: 10px; position: relative; z-index: 1; }
+  .stack a { display: flex; justify-content: space-between; align-items: center; background: var(--volt-ink); color: var(--text); padding: 20px 24px; border-radius: 18px; font-weight: 700; font-size: 18px; transition: transform .15s; }
+  .stack a:hover { transform: translateX(6px); }
+  .stack a small { display: block; font-weight: 500; font-size: 13px; color: var(--muted); }
+  .stack a .go { width: 40px; height: 40px; border-radius: 50%; background: var(--volt); color: var(--volt-ink); display: grid; place-items: center; }
+  .stripes { position: absolute; right: -60px; top: -60px; width: 260px; height: 260px; background: repeating-linear-gradient(45deg, rgba(15,15,14,.12) 0 18px, transparent 18px 36px); border-radius: 50%; }
+
+  /* faq */
+  .faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; }
+  details { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; padding: 24px 0; display: flex; justify-content: space-between; gap: 20px; font-weight: 700; font-size: 19px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; width: 32px; height: 32px; flex: none; border-radius: 50%; border: 1px solid #45453F; display: grid; place-items: center; font-weight: 500; transition: transform .2s, background .2s; }
+  details[open] summary::after { transform: rotate(45deg); background: var(--volt); color: var(--volt-ink); border-color: var(--volt); }
+  details p { color: var(--muted); padding: 0 52px 24px 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 44px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+
+  @media (max-width: 1024px) {
+    .menu { display: none; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(210px, auto); }
+    .nums { grid-template-columns: 1fr 1fr; }
+    .nums div:nth-child(3) { border-left: 0; padding-left: 0; }
+    .nums div:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .steps { grid-template-columns: 1fr 1fr; gap: 32px 14px; }
+    .cta-block, .faq { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    .nav { height: 64px; }
+    .nav-right .btn { display: none; }
+    .burger { display: grid; }
+    .hero { padding-top: 40px; }
+    .hero-top .hide-sm { display: none; }
+    h1 .out { -webkit-text-stroke-width: 1.5px; }
+    .hero-copy .cta .btn { flex: 1 1 100%; }
+    .ba { aspect-ratio: 4/3.4; border-radius: 18px; }
+    .ticker-in { font-size: 16px; }
+    section { padding: 72px 0; }
+    .bento { grid-template-columns: 1fr; }
+    .tile.big, .tile.wide { grid-column: auto; grid-row: auto; }
+    .tile.big { min-height: 300px; }
+    .nums div { padding: 28px 12px 28px 0; }
+    .nums div + div { padding-left: 12px; }
+    .nums div:nth-child(3) { padding-left: 0; }
+    .steps { grid-template-columns: 1fr; }
+    .rail { grid-auto-columns: 86%; }
+    .cta-block { padding: 44px 22px; border-radius: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo">DEMONTAG<span>.PRO</span></a>
+    <nav class="menu">
+      <a href="#services">Послуги</a>
+      <a href="#process">Процес</a>
+      <a href="#cases">Об'єкти</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn ghost sm" href="tel:+380670000000">+38 067 000 00 00</a>
+      <a class="btn sm" href="#contact">Розрахувати</a>
+      <button class="burger" aria-label="Меню"><svg width="18" height="12" viewBox="0 0 18 12"><path d="M0 1h18M0 6h18M0 11h18" stroke="#F1EFE8" stroke-width="1.6"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="live">Зараз працюємо на 4 об'єктах</span>
+      <span class="hide-sm">Вінниця · Київ · області</span>
+    </div>
+    <h1>Зносимо.<br><span class="out">Вивозимо.</span><br><span class="v">Здаємо чистим.</span></h1>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p>Від перегородки в квартирі до заводського цеху. Власна техніка, фіксована ціна в договорі та щоденний фотозвіт з об'єкта.</p>
+        <div class="cta">
+          <a class="btn" href="#contact">Оцінка за фото — 30 хв →</a>
+          <a class="btn ghost" href="#cases">Наші об'єкти</a>
+        </div>
+      </div>
+
+      <div class="ba" id="ba" style="--pos:52%" aria-label="Порівняння до і після. Тягніть повзунок.">
+        <!-- AFTER: clean lot -->
+        <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="800" height="500" fill="#1C1D1A"/>
+          <rect y="330" width="800" height="170" fill="#262622"/>
+          <g stroke="#34342F" stroke-width="1">
+            <line x1="0" y1="370" x2="800" y2="370"/><line x1="0" y1="420" x2="800" y2="420"/><line x1="0" y1="470" x2="800" y2="470"/>
+            <line x1="100" y1="330" x2="40" y2="500"/><line x1="250" y1="330" x2="220" y2="500"/><line x1="400" y1="330" x2="400" y2="500"/><line x1="550" y1="330" x2="580" y2="500"/><line x1="700" y1="330" x2="760" y2="500"/>
+          </g>
+          <!-- survey pegs -->
+          <g fill="#FF6B1A"><rect x="180" y="345" width="5" height="30"/><rect x="610" y="345" width="5" height="30"/><rect x="180" y="345" width="16" height="7"/><rect x="610" y="345" width="16" height="7"/></g>
+          <line x1="185" y1="352" x2="612" y2="352" stroke="#FF6B1A" stroke-dasharray="6 6" stroke-width="1.5"/>
+          <!-- sign -->
+          <rect x="470" y="230" width="6" height="110" fill="#5A5A52"/>
+          <rect x="400" y="200" width="150" height="56" rx="6" fill="#FF6B1A"/>
+          <text x="475" y="224" text-anchor="middle" font-family="Unbounded" font-weight="700" font-size="14" fill="#0F0F0E">ГОТОВО</text>
+          <text x="475" y="243" text-anchor="middle" font-family="Manrope" font-weight="700" font-size="11" fill="#0F0F0E">під забудову</text>
+          <!-- skyline far -->
+          <g fill="#242521"><rect x="30" y="250" width="70" height="80"/><rect x="110" y="270" width="50" height="60"/><rect x="660" y="240" width="90" height="90"/><rect x="600" y="280" width="50" height="50"/></g>
+        </svg>
+        <!-- BEFORE: old building -->
+        <svg class="before" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="800" height="500" fill="#1C1D1A"/>
+          <rect y="330" width="800" height="170" fill="#2A2824"/>
+          <g fill="#242521"><rect x="30" y="250" width="70" height="80"/><rect x="110" y="270" width="50" height="60"/><rect x="660" y="240" width="90" height="90"/><rect x="600" y="280" width="50" height="50"/></g>
+          <!-- building -->
+          <path d="M200 330 V170 L300 120 L420 120 L600 170 V330 Z" fill="#4A3E35"/>
+          <path d="M200 170 L300 120 L420 120 L600 170" fill="none" stroke="#2F2823" stroke-width="10"/>
+          <!-- brick rows -->
+          <g stroke="#3B312A" stroke-width="2">
+            <line x1="200" y1="200" x2="600" y2="200"/><line x1="200" y1="230" x2="600" y2="230"/><line x1="200" y1="260" x2="600" y2="260"/><line x1="200" y1="290" x2="600" y2="290"/><line x1="200" y1="320" x2="600" y2="320"/>
+          </g>
+          <!-- windows -->
+          <g fill="#151513" stroke="#2F2823" stroke-width="4">
+            <rect x="240" y="205" width="60" height="60"/><rect x="370" y="205" width="60" height="60"/><rect x="500" y="205" width="60" height="60"/>
+          </g>
+          <path d="M240 205 L300 265 M370 265 L430 205" stroke="#6B5E52" stroke-width="2"/>
+          <!-- cracks -->
+          <path d="M330 120 L345 160 L330 190 L350 230" stroke="#151513" stroke-width="3" fill="none"/>
+          <path d="M560 170 L540 210 L555 240" stroke="#151513" stroke-width="3" fill="none"/>
+          <!-- debris -->
+          <g fill="#3B342E"><path d="M120 330 L160 300 L190 330Z"/><path d="M610 330 L640 310 L690 330Z"/><rect x="150" y="318" width="22" height="12"/><rect x="640" y="320" width="18" height="10"/></g>
+          <!-- hazard tape -->
+          <rect x="0" y="342" width="800" height="12" fill="#FF6B1A" opacity=".9"/>
+          <g fill="#0F0F0E"><path d="M0 342h14l-12 12H-12z"/><path d="M40 342h14l-12 12H28z"/><path d="M80 342h14l-12 12H68z"/><path d="M120 342h14l-12 12h-14z"/><path d="M160 342h14l-12 12h-14z"/><path d="M200 342h14l-12 12h-14z"/><path d="M240 342h14l-12 12h-14z"/><path d="M280 342h14l-12 12h-14z"/><path d="M320 342h14l-12 12h-14z"/><path d="M360 342h14l-12 12h-14z"/><path d="M400 342h14l-12 12h-14z"/><path d="M440 342h14l-12 12h-14z"/><path d="M480 342h14l-12 12h-14z"/><path d="M520 342h14l-12 12h-14z"/><path d="M560 342h14l-12 12h-14z"/><path d="M600 342h14l-12 12h-14z"/><path d="M640 342h14l-12 12h-14z"/><path d="M680 342h14l-12 12h-14z"/><path d="M720 342h14l-12 12h-14z"/><path d="M760 342h14l-12 12h-14z"/></g>
+        </svg>
+        <span class="lbl l">До</span>
+        <span class="lbl r">Після</span>
+        <div class="handle"><div class="knob">⇆</div></div>
+        <span class="cap">Тягніть · будинок 140 м² → 3 дні</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-in">
+      <span>Знесення будинків</span><span>Демонтаж квартир</span><span>Бетон і фундаменти</span><span>Металоконструкції</span><span>Промислові об'єкти</span><span>Вивіз сміття</span>
+      <span>Знесення будинків</span><span>Демонтаж квартир</span><span>Бетон і фундаменти</span><span>Металоконструкції</span><span>Промислові об'єкти</span><span>Вивіз сміття</span>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Послуги</span><h2>Що ми<br>розбираємо</h2></div>
+      <p>Ціни — «від». Точну суму назвемо за фото, без виїзду і без зобов'язань.</p>
+    </div>
+    <div class="bento">
+      <a href="#contact" class="tile big">
+        <span class="n">01</span>
+        <div>
+          <h3>Знесення будинків<br>і будівель</h3>
+          <p>Приватні будинки, дачі, гаражі, склади. Розбираємо, сортуємо, вивозимо — ділянка готова під нове будівництво.</p>
+          <span class="price">від 25 000 ₴ за об'єкт</span>
+        </div>
+        <span class="glyph">01</span>
+      </a>
+      <a href="#contact" class="tile"><span class="n">02</span><div><h3>Квартири<br>й офіси</h3><span class="price">від 90 ₴/м²</span></div></a>
+      <a href="#contact" class="tile"><span class="n">03</span><div><h3>Бетон<br>і фундаменти</h3><span class="price">від 900 ₴/м³</span></div></a>
+      <a href="#contact" class="tile"><span class="n">04</span><div><h3>Метал<br>і ангари</h3><span class="price">від 1 500 ₴/т</span></div></a>
+      <a href="#contact" class="tile"><span class="n">05</span><div><h3>Вивіз<br>сміття</h3><span class="price">від 2 500 ₴/рейс</span></div></a>
+      <a href="#contact" class="tile wide"><span class="n">06</span><div><h3>Пошкоджені та аварійні будівлі</h3><p>Обстеження, план безпечного розбирання, робота поруч із жилими будинками.</p></div></a>
+      <a href="#contact" class="tile wide"><span class="n">07</span><div><h3>Промисловий демонтаж</h3><p>Цехи, заводи, труби, резервуари. Гідроножиці, гідромолоти, автокрани.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="nums">
+      <div><b>30<i>хв</i></b><span>оцінка вартості за фото</span></div>
+      <div><b>0<i>₴</i></b><span>передоплати — платите за актом</span></div>
+      <div><b>12<i>од</i></b><span>власної техніки на ходу</span></div>
+      <div><b>24<i>/7</i></b><span>можемо працювати цілодобово</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="process" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Процес</span><h2>4 кроки<br>без сюрпризів</h2></div>
+      <p>Ви знаєте ціну до старту і бачите прогрес щодня.</p>
+    </div>
+    <div class="steps">
+      <div class="st"><b>01</b><h3>Фото в месенджер</h3><p>3–5 знімків об'єкта — і за 30 хвилин маєте орієнтир по ціні.</p></div>
+      <div class="st"><b>02</b><h3>Фіксуємо ціну</h3><p>Кошторис за 24 години. Сума в договорі не змінюється.</p></div>
+      <div class="st"><b>03</b><h3>Працюємо</h3><p>Власна техніка, захист сусідніх конструкцій, фото щовечора.</p></div>
+      <div class="st"><b>04</b><h3>Здаємо чистим</h3><p>Вивозимо все до останнього мішка. Акт, талони, оплата.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cases" style="background:#141413">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Об'єкти</span><h2>Свіжі<br>роботи</h2></div>
+      <a class="btn ghost" href="#">Instagram →</a>
+    </div>
+    <div class="rail">
+      <article class="card"><div class="img"><div class="chips"><span class="chip">Будинок</span><span class="chip v">3 дні</span></div>Фото / відео</div><div class="body"><h3>Знесення цегляного будинку під забудову</h3><div class="meta"><span><b>140 м²</b> площа</span><span><b>14</b> рейсів</span></div></div></article>
+      <article class="card"><div class="img"><div class="chips"><span class="chip">Квартира</span><span class="chip v">4 дні</span></div>Фото / відео</div><div class="body"><h3>Квартира під ключ: стіни, стяжка, плитка</h3><div class="meta"><span><b>78 м²</b> площа</span><span><b>420</b> мішків</span></div></div></article>
+      <article class="card"><div class="img"><div class="chips"><span class="chip">Склад</span><span class="chip v">9 днів</span></div>Фото / відео</div><div class="body"><h3>Демонтаж складу з металокаркасом</h3><div class="meta"><span><b>1 200 м²</b> площа</span><span><b>38 т</b> металу</span></div></div></article>
+      <article class="card"><div class="img"><div class="chips"><span class="chip">Фундамент</span><span class="chip v">2 дні</span></div>Фото / відео</div><div class="body"><h3>Розбір ЗБ фундаменту гідромолотом</h3><div class="meta"><span><b>64 м³</b> бетону</span><span><b>9</b> рейсів</span></div></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq">
+    <div><span class="eyebrow">FAQ</span><h2>Питають<br>найчастіше</h2></div>
+    <div>
+      <details open><summary>Скільки коштує знести будинок?</summary><p>Залежить від матеріалу, площі та під'їзду для техніки. Надішліть фото — назвемо орієнтир за 30 хвилин, точну ціну — після огляду.</p></details>
+      <details><summary>Ціна точно не зміниться?</summary><p>Ні. Сума з кошторису фіксується в договорі. Додаткові роботи — тільки за вашим письмовим погодженням.</p></details>
+      <details><summary>Ви працюєте з пошкодженими будинками?</summary><p>Так. Проводимо обстеження, складаємо план безпечного розбирання та працюємо з документами для компенсацій.</p></details>
+      <details><summary>Як швидко можете почати?</summary><p>Зазвичай — наступного дня після підписання договору.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-block">
+      <div class="stripes"></div>
+      <div style="position:relative">
+        <h2>Скиньте фото.<br>Отримайте ціну.</h2>
+        <p>Відповідаємо за 30 хвилин. Вінниця, Київ і області. Без передоплати і без «доплат за складність».</p>
+      </div>
+      <div class="stack">
+        <a href="#"><div>Viber<small>надіслати фото</small></div><span class="go">→</span></a>
+        <a href="#"><div>Telegram<small>надіслати фото</small></div><span class="go">→</span></a>
+        <a href="tel:+380670000000"><div>+38 067 000 00 00<small>подзвонити</small></div><span class="go">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="logo">DEMONTAG<span>.PRO</span></span>
+    <span>Instagram · Viber · Telegram</span>
+    <span>Концепт B «Бетон» · контакти, ціни та цифри — демо-дані</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var el = document.getElementById('ba');
+    var dragging = false;
+    function set(x) {
+      var r = el.getBoundingClientRect();
+      var p = Math.min(100, Math.max(0, (x - r.left) / r.width * 100));
+      el.style.setProperty('--pos', p + '%');
+    }
+    el.addEventListener('pointerdown', function (e) { dragging = true; el.setPointerCapture(e.pointerId); set(e.clientX); });
+    el.addEventListener('pointermove', function (e) { if (dragging) set(e.clientX); });
+    el.addEventListener('pointerup', function () { dragging = false; });
+    el.addEventListener('pointercancel', function () { dragging = false; });
+  })();
+</script>
+</body>
+</html>

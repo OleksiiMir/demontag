@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>DEMONTAG.PRO — Креслення</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F4F2ED;
+    --paper-2: #ECE9E2;
+    --ink: #15171C;
+    --muted: #5E636F;
+    --line: #D6D2C8;
+    --line-strong: #B9B4A8;
+    --blue: #2340E0;
+    --blue-ink: #1A31B0;
+    --blue-soft: #E3E7FB;
+    --white: #FFFFFF;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --sans: "Onest", system-ui, sans-serif;
+    --wrap: 1200px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+
+  /* blueprint grid behind hero */
+  .grid-bg {
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+  }
+
+  /* header */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(244,242,237,.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; gap: 32px; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.01em; font-size: 18px; }
+  .logo svg { flex: none; }
+  .logo span { color: var(--blue); }
+  .menu { display: flex; gap: 26px; font-size: 15px; color: var(--muted); }
+  .menu a:hover { color: var(--ink); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+  .phone { font-weight: 600; font-size: 15px; white-space: nowrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 48px; padding: 0 22px;
+    font: 600 15px/1 var(--sans);
+    border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--blue); border-color: var(--blue); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.blue { background: var(--blue); border-color: var(--blue); }
+  .btn.blue:hover { background: var(--blue-ink); border-color: var(--blue-ink); }
+  .btn.sm { height: 40px; padding: 0 16px; font-size: 14px; }
+  .burger { display: none; background: none; border: 1px solid var(--line-strong); width: 40px; height: 40px; cursor: pointer; }
+
+  /* hero */
+  .hero { border-bottom: 1px solid var(--line); }
+  .hero-in { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; padding: 72px 24px 64px; }
+  .tag { display: inline-flex; align-items: center; gap: 8px; color: var(--blue); margin-bottom: 22px; }
+  .tag::before { content: ""; width: 8px; height: 8px; background: var(--blue); }
+  h1 { font-size: clamp(38px, 5vw, 62px); line-height: 1.04; letter-spacing: -.035em; font-weight: 800; }
+  h1 em { font-style: normal; color: var(--blue); }
+  .lead { margin-top: 22px; max-width: 520px; color: var(--muted); font-size: 19px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
+  .specs { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 48px; border-top: 1px solid var(--ink); }
+  .specs div { padding: 16px 16px 0 0; }
+  .specs b { display: block; font-size: 30px; letter-spacing: -.03em; font-weight: 700; }
+  .specs .mono { color: var(--muted); }
+
+  .sheet { background: var(--white); border: 1px solid var(--ink); position: relative; align-self: start; }
+  .sheet-head { display: flex; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--ink); }
+  .sheet svg { display: block; width: 100%; height: auto; background: var(--white); }
+  .sheet table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .sheet td { padding: 10px 16px; border-top: 1px solid var(--line); }
+  .sheet td:first-child { font-family: var(--mono); font-size: 12px; text-transform: uppercase; color: var(--muted); width: 40%; letter-spacing: .05em; }
+  .sheet tr:first-child td { border-top: 1px solid var(--ink); }
+  .stamp {
+    position: absolute; right: 18px; bottom: 18px;
+    border: 2px solid var(--blue); color: var(--blue);
+    padding: 6px 10px; transform: rotate(-6deg);
+    font: 600 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; background: rgba(255,255,255,.85);
+  }
+
+  /* sections */
+  section { padding: 96px 0; border-bottom: 1px solid var(--line); }
+  .sec-head { display: grid; grid-template-columns: 200px 1fr auto; gap: 24px; align-items: end; margin-bottom: 48px; }
+  .sec-num { color: var(--blue); }
+  h2 { font-size: clamp(30px, 3.6vw, 44px); line-height: 1.08; letter-spacing: -.03em; font-weight: 750; font-weight: 700; }
+  .sec-note { color: var(--muted); max-width: 320px; font-size: 15px; }
+
+  /* services list */
+  .svc { border-top: 1px solid var(--ink); }
+  .svc a {
+    display: grid; grid-template-columns: 200px 1.2fr 1.4fr 160px 40px; gap: 24px; align-items: center;
+    padding: 26px 0; border-bottom: 1px solid var(--line); transition: background .15s, padding .15s;
+  }
+  .svc a:hover { background: var(--blue-soft); padding-left: 16px; padding-right: 16px; }
+  .svc .mono { color: var(--muted); }
+  .svc h3 { font-size: 22px; font-weight: 650; font-weight: 600; letter-spacing: -.015em; }
+  .svc p { color: var(--muted); font-size: 15px; }
+  .svc .price { font-weight: 600; text-align: right; }
+  .svc .price small { display: block; font: 400 12px var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .arrow { width: 40px; height: 40px; border: 1px solid var(--ink); display: grid; place-items: center; transition: background .15s, color .15s; }
+  .svc a:hover .arrow { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+  /* process */
+  .steps { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; }
+  .steps::before { content: ""; position: absolute; top: 19px; left: 0; right: 0; height: 1px; background: var(--ink); }
+  .step { padding-right: 22px; position: relative; }
+  .dot { width: 40px; height: 40px; border: 1px solid var(--ink); background: var(--paper); display: grid; place-items: center; font: 500 13px var(--mono); position: relative; }
+  .step:first-child .dot { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .step .when { margin-top: 22px; color: var(--blue); }
+  .step h3 { font-size: 19px; font-weight: 600; margin: 6px 0 8px; letter-spacing: -.01em; }
+  .step p { color: var(--muted); font-size: 15px; }
+
+  /* guarantees */
+  .guar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .guar div { padding: 30px 28px 34px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper); }
+  .guar div:hover { background: var(--white); }
+  .guar .mono { color: var(--blue); }
+  .guar h3 { font-size: 20px; font-weight: 600; margin: 14px 0 8px; letter-spacing: -.01em; }
+  .guar p { color: var(--muted); font-size: 15px; }
+
+  /* cases */
+  .cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .case { background: var(--white); border: 1px solid var(--line-strong); }
+  .ph {
+    aspect-ratio: 4/3; position: relative; border-bottom: 1px solid var(--line-strong);
+    background: repeating-linear-gradient(135deg, var(--paper-2) 0 10px, var(--paper) 10px 20px);
+    display: grid; place-items: center; color: var(--muted);
+  }
+  .ph .mono { background: var(--white); padding: 6px 10px; border: 1px solid var(--line-strong); }
+  .ph .ba { position: absolute; top: 12px; left: 12px; display: flex; gap: 4px; }
+  .ph .ba span { font: 500 11px var(--mono); padding: 4px 8px; background: var(--ink); color: #fff; text-transform: uppercase; }
+  .ph .ba span + span { background: var(--blue); }
+  .case-b { padding: 20px; }
+  .case-b h3 { font-size: 19px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 14px; }
+  .case dl { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+  .case dt { font: 400 11px var(--mono); text-transform: uppercase; color: var(--muted); letter-spacing: .05em; }
+  .case dd { font-weight: 600; font-size: 15px; }
+
+  /* faq */
+  .faq-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; }
+  details { border-top: 1px solid var(--line); }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 24px; padding: 22px 0; font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font: 400 22px var(--mono); color: var(--blue); line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { padding: 0 48px 24px 0; color: var(--muted); }
+
+  /* contact */
+  .contact { background: var(--blue); color: #fff; border-bottom: 0; }
+  .contact .grid-lines {
+    background-image:
+      linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .contact-in { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center; padding: 96px 24px; }
+  .contact h2 { font-size: clamp(32px, 4.2vw, 54px); }
+  .contact p { margin-top: 18px; opacity: .85; max-width: 480px; font-size: 18px; }
+  .channels { display: grid; gap: 10px; }
+  .channel {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    background: #fff; color: var(--ink); padding: 20px 22px; border: 1px solid #fff; transition: transform .15s;
+  }
+  .channel:hover { transform: translateX(6px); }
+  .channel b { font-size: 18px; font-weight: 600; }
+  .channel .mono { color: var(--muted); display: block; margin-top: 2px; }
+  .channel.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .channel.dark .mono { color: #A5A9B4; }
+
+  footer { background: var(--ink); color: #A5A9B4; padding: 40px 0; font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  footer .logo { color: #fff; }
+  .demo-note { color: #7D8290; }
+
+  @media (max-width: 1024px) {
+    .menu { display: none; }
+    .hero-in { grid-template-columns: 1fr; }
+    .svc a { grid-template-columns: 1fr auto; gap: 8px 16px; }
+    .svc .mono { grid-column: 1 / -1; }
+    .svc p { grid-column: 1 / -1; grid-row: 3; }
+    .svc .arrow { display: none; }
+    .steps { grid-template-columns: 1fr; gap: 28px; }
+    .steps::before { top: 0; bottom: 0; left: 19px; right: auto; width: 1px; height: auto; }
+    .step { display: grid; grid-template-columns: 40px 1fr; column-gap: 20px; padding: 0; }
+    .step .dot { grid-row: 1 / 4; }
+    .step .when { margin-top: 0; }
+    .guar { grid-template-columns: 1fr 1fr; }
+    .cases { grid-template-columns: 1fr; }
+    .faq-grid, .contact-in { grid-template-columns: 1fr; gap: 40px; }
+    .sec-head { grid-template-columns: 1fr; gap: 12px; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    .nav { gap: 12px; }
+    .phone { display: none; }
+    .nav-right .btn { display: none; }
+    .burger { display: grid; place-items: center; }
+    .hero-in { padding: 44px 16px 48px; gap: 40px; }
+    .specs b { font-size: 24px; }
+    .specs .mono { font-size: 10px; }
+    section { padding: 64px 0; }
+    .guar { grid-template-columns: 1fr; }
+    .contact-in { padding: 64px 16px; }
+    .cta-row .btn { flex: 1 1 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" fill="none" stroke="#15171C" stroke-width="2"/><path d="M1 29 L29 1 V29 Z" fill="#2340E0"/></svg>
+      <b>DEMONTAG<span>.PRO</span></b>
+    </a>
+    <nav class="menu">
+      <a href="#services">Послуги</a>
+      <a href="#process">Як працюємо</a>
+      <a href="#cases">Об'єкти</a>
+      <a href="#faq">Питання</a>
+      <a href="#contact">Контакти</a>
+    </nav>
+    <div class="nav-right">
+      <a class="phone" href="tel:+380670000000">+38 067 000 00 00</a>
+      <a class="btn sm blue" href="#contact">Оцінити за фото</a>
+      <button class="burger" aria-label="Меню"><svg width="18" height="12" viewBox="0 0 18 12"><path d="M0 1h18M0 6h18M0 11h18" stroke="#15171C" stroke-width="1.6"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="hero grid-bg">
+  <div class="wrap hero-in" style="padding-left:24px;padding-right:24px">
+    <div>
+      <div class="tag mono">Демонтаж · Вінниця · Київ</div>
+      <h1>Демонтаж за&nbsp;кошторисом, <em>а&nbsp;не&nbsp;«на&nbsp;око»</em></h1>
+      <p class="lead">Знесемо будинок, розберемо перегородки чи бетон, вивеземо сміття і здамо майданчик чистим. Ціну фіксуємо в договорі ще до старту робіт.</p>
+      <div class="cta-row">
+        <a class="btn blue" href="#contact">Надіслати фото на оцінку
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></a>
+        <a class="btn ghost" href="tel:+380670000000">Подзвонити</a>
+      </div>
+      <div class="specs">
+        <div><b>30 хв</b><span class="mono">оцінка за фото</span></div>
+        <div><b>0 ₴</b><span class="mono">передоплати</span></div>
+        <div><b>100%</b><span class="mono">вивозимо сміття</span></div>
+      </div>
+    </div>
+
+    <div class="sheet" aria-label="Приклад специфікації робіт">
+      <div class="sheet-head mono"><span>Специфікація № 0247</span><span>Арк. 1/1</span></div>
+      <svg viewBox="0 0 520 300" role="img" aria-label="Креслення будинку під знесення">
+        <defs>
+          <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#2340E0" stroke-width="1.4"/>
+          </pattern>
+          <marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#15171C"/></marker>
+        </defs>
+        <!-- ground -->
+        <line x1="30" y1="240" x2="490" y2="240" stroke="#15171C" stroke-width="1.5"/>
+        <g stroke="#B9B4A8" stroke-width="1">
+          <line x1="40" y1="246" x2="52" y2="252"/><line x1="70" y1="246" x2="82" y2="252"/><line x1="100" y1="246" x2="112" y2="252"/><line x1="130" y1="246" x2="142" y2="252"/><line x1="160" y1="246" x2="172" y2="252"/><line x1="190" y1="246" x2="202" y2="252"/><line x1="220" y1="246" x2="232" y2="252"/><line x1="250" y1="246" x2="262" y2="252"/><line x1="280" y1="246" x2="292" y2="252"/><line x1="310" y1="246" x2="322" y2="252"/><line x1="340" y1="246" x2="352" y2="252"/><line x1="370" y1="246" x2="382" y2="252"/><line x1="400" y1="246" x2="412" y2="252"/><line x1="430" y1="246" x2="442" y2="252"/><line x1="460" y1="246" x2="472" y2="252"/>
+        </g>
+        <!-- house to demolish (hatched) -->
+        <path d="M90 240 V130 L200 70 L310 130 V240 Z" fill="url(#hatch)" stroke="#2340E0" stroke-width="2"/>
+        <rect x="120" y="165" width="40" height="40" fill="#fff" stroke="#2340E0" stroke-width="1.5"/>
+        <rect x="240" y="165" width="40" height="40" fill="#fff" stroke="#2340E0" stroke-width="1.5"/>
+        <rect x="183" y="180" width="34" height="60" fill="#fff" stroke="#2340E0" stroke-width="1.5"/>
+        <!-- annex kept -->
+        <rect x="330" y="170" width="120" height="70" fill="#fff" stroke="#15171C" stroke-width="1.5"/>
+        <rect x="352" y="190" width="30" height="26" fill="none" stroke="#15171C" stroke-width="1.2"/>
+        <rect x="400" y="190" width="30" height="26" fill="none" stroke="#15171C" stroke-width="1.2"/>
+        <!-- dimensions -->
+        <line x1="90" y1="270" x2="310" y2="270" stroke="#15171C" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <line x1="90" y1="244" x2="90" y2="276" stroke="#15171C" stroke-dasharray="2 2"/>
+        <line x1="310" y1="244" x2="310" y2="276" stroke="#15171C" stroke-dasharray="2 2"/>
+        <text x="200" y="290" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#15171C">12 400</text>
+        <line x1="60" y1="70" x2="60" y2="240" stroke="#15171C" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <line x1="54" y1="70" x2="196" y2="70" stroke="#15171C" stroke-dasharray="2 2"/>
+        <text x="50" y="160" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#15171C" transform="rotate(-90 50 160)">8 200</text>
+        <!-- callouts -->
+        <line x1="270" y1="100" x2="350" y2="60" stroke="#2340E0"/>
+        <circle cx="270" cy="100" r="3" fill="#2340E0"/>
+        <text x="356" y="58" font-family="JetBrains Mono" font-size="11" fill="#2340E0">ЗНЕСЕННЯ · 1 ПОВ.</text>
+        <text x="356" y="73" font-family="JetBrains Mono" font-size="11" fill="#2340E0">ЦЕГЛА, 140 м²</text>
+        <line x1="420" y1="170" x2="455" y2="130" stroke="#15171C"/>
+        <text x="420" y="122" font-family="JetBrains Mono" font-size="11" fill="#15171C">ЗБЕРІГАЄМО</text>
+      </svg>
+      <table>
+        <tr><td>Об'єкт</td><td>Приватний будинок, 140 м²</td></tr>
+        <tr><td>Метод</td><td>Механізований + ручне розбирання</td></tr>
+        <tr><td>Термін</td><td>3 робочі дні</td></tr>
+        <tr><td>Вивіз</td><td>14 рейсів, полігон з документами</td></tr>
+        <tr><td>Ціна</td><td><b>Фіксована в договорі</b></td></tr>
+      </table>
+      <div class="stamp">Погоджено</div>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="mono sec-num">01 / Послуги</span>
+      <h2>Що демонтуємо</h2>
+      <p class="sec-note">Ціни «від» — орієнтир. Точну суму дамо за фото або після виїзду — безкоштовно.</p>
+    </div>
+    <div class="svc">
+      <a href="#contact"><span class="mono">01.1 · Будівлі</span><h3>Знесення будинків і будівель</h3><p>Житлові будинки, дачі, гаражі, господарські споруди. Розбирання, сортування, вивіз.</p><span class="price">від 25 000 ₴<small>за об'єкт</small></span><span class="arrow">→</span></a>
+      <a href="#contact"><span class="mono">01.2 · Квартири</span><h3>Демонтаж у квартирах і офісах</h3><p>Перегородки, стяжка, плитка, штукатурка, сантехніка. Тихі години, захист під'їзду.</p><span class="price">від 90 ₴<small>за м²</small></span><span class="arrow">→</span></a>
+      <a href="#contact"><span class="mono">01.3 · Бетон</span><h3>Бетон, фундаменти, ЗБ конструкції</h3><p>Гідромолот, алмазне різання, гідроножиці. Колони, плити, палі.</p><span class="price">від 900 ₴<small>за м³</small></span><span class="arrow">→</span></a>
+      <a href="#contact"><span class="mono">01.4 · Метал</span><h3>Металоконструкції та ангари</h3><p>Розбирання каркасів, ангарів, резервуарів. Можемо зарахувати метал у вартість робіт.</p><span class="price">від 1 500 ₴<small>за тонну</small></span><span class="arrow">→</span></a>
+      <a href="#contact"><span class="mono">01.5 · Пошкоджені</span><h3>Розбір пошкоджених будівель</h3><p>Аварійні та зруйновані обстрілами об'єкти. Обстеження, план робіт, безпечне розбирання.</p><span class="price">договірна<small>після огляду</small></span><span class="arrow">→</span></a>
+      <a href="#contact"><span class="mono">01.6 · Вивіз</span><h3>Вивіз сміття і розчищення ділянки</h3><p>Навантаження, самоскиди, утилізація на полігоні. Планування ділянки під забудову.</p><span class="price">від 2 500 ₴<small>за рейс</small></span><span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="process" style="background:var(--white)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="mono sec-num">02 / Процес</span>
+      <h2>Від фото до чистого майданчика</h2>
+      <p class="sec-note">Кожен етап має термін. Ви завжди знаєте, що відбувається на об'єкті.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="dot">01</div><div class="when mono">Сьогодні</div><h3>Фото або виїзд</h3><p>Надсилаєте 3–5 фото в месенджер або кличете інженера на огляд.</p></div>
+      <div class="step"><div class="dot">02</div><div class="when mono">До 24 год</div><h3>Кошторис</h3><p>Розписуємо роботи, техніку, кількість рейсів і фінальну суму.</p></div>
+      <div class="step"><div class="dot">03</div><div class="when mono">День 1</div><h3>Договір і старт</h3><p>Ціна в договорі не змінюється. Передоплати немає.</p></div>
+      <div class="step"><div class="dot">04</div><div class="when mono">Щодня</div><h3>Роботи і звіт</h3><p>Фото й відео з об'єкта щовечора — навіть якщо ви в іншому місті.</p></div>
+      <div class="step"><div class="dot">05</div><div class="when mono">Фініш</div><h3>Чистий майданчик</h3><p>Вивозимо все, прибираємо територію, підписуємо акт.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="mono sec-num">03 / Гарантії</span>
+      <h2>Що ми гарантуємо письмово</h2>
+      <span></span>
+    </div>
+    <div class="guar">
+      <div><span class="mono">Договір</span><h3>Фіксована ціна</h3><p>Сума з кошторису — фінальна. Без «доплат за складність» посеред робіт.</p></div>
+      <div><span class="mono">Оплата</span><h3>Без передоплати</h3><p>Платите поетапно або після здачі об'єкта — за актом виконаних робіт.</p></div>
+      <div><span class="mono">Техніка</span><h3>Власний парк</h3><p>Екскаватори, гідромолоти, самоскиди — без посередників і націнок.</p></div>
+      <div><span class="mono">Безпека</span><h3>Комунікації цілі</h3><p>Перед стартом відключаємо й маркуємо мережі. Сусідні конструкції під захистом.</p></div>
+      <div><span class="mono">Сміття</span><h3>Легальна утилізація</h3><p>Вивозимо на ліцензований полігон і віддаємо талони — жодних штрафів.</p></div>
+      <div><span class="mono">Звітність</span><h3>Щоденний фотозвіт</h3><p>Бачите прогрес у месенджері. На завершення — акт і фото «до / після».</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cases" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="mono sec-num">04 / Об'єкти</span>
+      <h2>Нещодавні роботи</h2>
+      <a class="btn ghost sm" href="#">Всі об'єкти в Instagram →</a>
+    </div>
+    <div class="cases">
+      <article class="case">
+        <div class="ph"><div class="ba"><span>До</span><span>Після</span></div><span class="mono">Фото об'єкта</span></div>
+        <div class="case-b"><h3>Знесення цегляного будинку під нове будівництво</h3>
+          <dl><dt>Площа</dt><dt>Термін</dt><dd>140 м²</dd><dd>3 дні</dd><dt>Вивіз</dt><dt>Кошторис</dt><dd>14 рейсів</dd><dd>= факт</dd></dl></div>
+      </article>
+      <article class="case">
+        <div class="ph"><div class="ba"><span>До</span><span>Після</span></div><span class="mono">Фото об'єкта</span></div>
+        <div class="case-b"><h3>Квартира під ключ: стіни, стяжка, плитка</h3>
+          <dl><dt>Площа</dt><dt>Термін</dt><dd>78 м²</dd><dd>4 дні</dd><dt>Вивіз</dt><dt>Кошторис</dt><dd>420 мішків</dd><dd>= факт</dd></dl></div>
+      </article>
+      <article class="case">
+        <div class="ph"><div class="ba"><span>До</span><span>Після</span></div><span class="mono">Фото об'єкта</span></div>
+        <div class="case-b"><h3>Демонтаж складу з металокаркасом</h3>
+          <dl><dt>Площа</dt><dt>Термін</dt><dd>1 200 м²</dd><dd>9 днів</dd><dt>Метал</dt><dt>Кошторис</dt><dd>38 т у залік</dd><dd>= факт</dd></dl></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq-grid">
+    <div>
+      <span class="mono sec-num">05 / Питання</span>
+      <h2 style="margin-top:14px">Часті питання</h2>
+      <p class="sec-note" style="margin-top:16px">Не знайшли відповідь? Напишіть — інженер відповість протягом 30 хвилин.</p>
+    </div>
+    <div>
+      <details open><summary>Як ви рахуєте ціну за фото?</summary><p>За фото та розмірами визначаємо матеріал, обсяг і доступ для техніки. Для складних об'єктів інженер приїздить на огляд — безкоштовно.</p></details>
+      <details><summary>Чи може ціна змінитися під час робіт?</summary><p>Ні. Сума з кошторису фіксується в договорі. Змінитися вона може лише якщо ви самі додаєте нові роботи.</p></details>
+      <details><summary>Чи потрібні дозволи на знесення будинку?</summary><p>Для більшості приватних об'єктів — так. Підкажемо, які документи потрібні, і допоможемо їх підготувати.</p></details>
+      <details><summary>Куди дівається сміття?</summary><p>Вивозимо власними самоскидами на ліцензований полігон. Талони про утилізацію передаємо вам.</p></details>
+      <details><summary>Чи працюєте ви з юридичними особами?</summary><p>Так, працюємо з ПДВ і без, з повним пакетом закриваючих документів.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="grid-lines">
+    <div class="wrap contact-in" style="padding-left:24px;padding-right:24px">
+      <div>
+        <span class="mono" style="opacity:.75">06 / Контакти</span>
+        <h2 style="margin-top:14px">Надішліть 3–5 фото — отримайте кошторис за&nbsp;30&nbsp;хвилин</h2>
+        <p>Щодня з 8:00 до 20:00. Вінниця, Київ та області.</p>
+      </div>
+      <div class="channels">
+        <a class="channel" href="#"><div><b>Viber</b><span class="mono">надіслати фото</span></div><span>→</span></a>
+        <a class="channel" href="#"><div><b>Telegram</b><span class="mono">надіслати фото</span></div><span>→</span></a>
+        <a class="channel dark" href="tel:+380670000000"><div><b>+38 067 000 00 00</b><span class="mono">подзвонити інженеру</span></div><span>→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="#" class="logo">DEMONTAG<span>.PRO</span></a>
+    <span>Instagram · Viber · Telegram</span>
+    <span class="demo-note">Концепт A «Креслення» · контакти, ціни та цифри — демо-дані</span>
+  </div>
+</footer>
+
+</body>
+</html>
